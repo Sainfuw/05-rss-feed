@@ -1,11 +1,11 @@
 ---
-import { getCollection } from 'astro:content'
-import BlogPost from '../components/BlogPost.astro'
-import { siteConfig } from '../configs/site-config'
-import MainLayout from '../layouts/MainLayout.astro'
+import BlogPost from '@/components/BlogPost.astro'
+import { siteConfig } from '@/configs/site-config'
+import MainLayout from '@/layouts/MainLayout.astro'
+import { getCollection, type CollectionEntry } from 'astro:content'
 
 const { title } = siteConfig
-const blogPosts = await getCollection('blog', (post) => !post.data.isDraft)
+const blogPosts: CollectionEntry<'blog'>[] = await getCollection('blog')
 ---
 
 <MainLayout title='Blog'>
@@ -20,7 +20,7 @@ const blogPosts = await getCollection('blog', (post) => !post.data.isDraft)
       >Listado de Autores</a
     >
   </div>
-  <div class='grid grid-cols-1 md:grid-cols-2 gap-8 mt-8'>
+  <div class='grid grid-cols-1 md:grid-cols-2 gap-4 mt-8'>
     {blogPosts.map((post) => <BlogPost post={post} />)}
   </div>
 </MainLayout>
